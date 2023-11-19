@@ -4,6 +4,9 @@ const Bread = require('../models/bread.js')
 
 //index
 breads.get('/',function(req, res){
+    res.render('index', {
+        breads: Bread
+    })
     res.send(Bread)
 });
 
