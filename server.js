@@ -7,6 +7,7 @@ const PORT = process.env.PORT
 const app = express()
 
 //Midd
+app.use(express.static('public'))
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
@@ -14,6 +15,11 @@ app.engine('jsx', require('express-react-views').createEngine())
 //Routes
 app.get('/',function(req, res){
     res.send('Welcome to an Awesome App about Breads!')
+})
+
+//404 Page
+app.get('*', function(req,res){
+    res.send('404')
 })
 
 // breads
