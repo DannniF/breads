@@ -10,8 +10,9 @@ function Index({breads}){
             <ul>
                 {
                     breads.map(function(bread, index){
-                        return(<li key={index}>
-                            <a href ={`/breads/${index}`}>
+                        return(
+                        <li key={index}>
+                            <a href ={`/breads/${bread.id}`}>
                             {bread.name}
                         </a>
                         </li>
