@@ -1,6 +1,9 @@
+//dependencies
 const express = require('express')
 const breads = express.Router()
 const Bread = require('../models/bread.js')
+const Baker = require('../models/baker.js');
+const baker_seed = require('../models/baker_seed.js');
 
 //index
 breads.get('/',function(req, res){
@@ -14,8 +17,15 @@ breads.get('/',function(req, res){
 });
 
 breads.get('/new', (req, res) => {
-    res.render('new')
+  Baker.find()
+    .then(foundBakers => {
+      res.render('new', {
+        bakers: foundBakers
+      })
+    })
+    // res.render('new')
 })
+
 
 
 // EDIT
