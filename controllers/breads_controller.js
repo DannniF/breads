@@ -7,13 +7,17 @@ const baker_seed = require('../models/baker_seed.js');
 
 //index
 breads.get('/',function(req, res){
-  Bread.find()
+  Baker.find()
+  .then(foundBakers => {
+    Bread.find()
     .then(foundBreads => {
-     res.render('index',{
-      breads: foundBreads,
-      title: 'Index Page'
+      res.render('index',{
+       breads: foundBreads,
+       bakers: foundBakers,
+       title: 'Index Page'
+      })
      })
-    })
+  })
 });
 
 breads.get('/new', (req, res) => {
@@ -44,11 +48,16 @@ breads.get('/new', (req, res) => {
 // //   })
 // })
 breads.get('/:id/edit', (req, res) => {
-  Bread.findById(req.params.id) 
+  Baker.find()
+  .then(foundBakers =>{
+    Bread.findById(req.params.id) 
     .then(foundBread => { 
       res.render('edit', {
-        bread: foundBread 
+        bread: foundBread,
+        bakers: foundBakers
       })
+  })
+
     })
 })
 
@@ -76,12 +85,13 @@ breads.get('/:id/edit', (req, res) => {
 //             })
 //         })
 // })
-
+//show
 breads.get('/:id', (req, res) => {
   Bread.findById(req.params.id)
+  .populate('baker')
     .then(foundBread => {
-      const bakedBy = foundBread.getBakedBy()
-      console.log(bakedBy)
+      // const bakedBy = foundBread.getBakedBy()
+      // console.log(bakedBy)
       res.render('show', {
         bread: foundBread
       })
