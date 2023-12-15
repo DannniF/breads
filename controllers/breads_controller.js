@@ -5,19 +5,30 @@ const Bread = require('../models/bread.js')
 const Baker = require('../models/baker.js');
 const baker_seed = require('../models/baker_seed.js');
 
+// //index
+// breads.get('/',function(req, res){
+//   Baker.find()
+//   .then(foundBakers => {
+//     Bread.find()
+//     .then(foundBreads => {
+//       res.render('index',{
+//        breads: foundBreads,
+//        bakers: foundBakers,
+//        title: 'Index Page'
+//       })
+//      })
+//   })
+// });
+//after refactoring
 //index
-breads.get('/',function(req, res){
-  Baker.find()
-  .then(foundBakers => {
-    Bread.find()
-    .then(foundBreads => {
+breads.get('/', async (req, res) =>{
+  const foundBakers = await Baker.find().lean()
+  const foundBreads = await Bread.find().limit(10).lean()
       res.render('index',{
        breads: foundBreads,
        bakers: foundBakers,
        title: 'Index Page'
       })
-     })
-  })
 });
 
 breads.get('/new', (req, res) => {
